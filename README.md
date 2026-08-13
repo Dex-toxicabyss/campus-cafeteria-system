@@ -1,49 +1,48 @@
-# Campus Cafeteria System
+# Campus Cafeteria System — Lab OOP Week 14
 
-Campus Cafeteria System is a runnable Java console application developed from the supplied Object-Oriented Programming course brief. It models a small beverage-ordering flow in a campus cafeteria.
+This repository contains a runnable Java console implementation of the **Campus Cafeteria Management System** from the Week 14 guided Object-Oriented Programming lab. The implementation follows the supplied lab structure: products with stock, food discount rules, a transaction using parallel `ArrayList`s, and a checked/unchecked custom-exception hierarchy.
 
-## Snapshot
+## Lab requirements implemented
 
-| Item | Detail |
+| Requirement | Implementation |
 | --- | --- |
-| Project type | Academic PBO project |
-| Language | Java |
-| Interface | Console application |
-| Main concepts | Abstraction, interfaces, inheritance, polymorphism, collections, exception handling, file I/O |
-| Status | Runnable source included |
+| Abstract class | `Produk` holds protected `nama`, `harga`, and `stok`; it declares abstract `getKategori()`. |
+| Interface | `Diskonable` provides `hitungDiskon()` and `getHargaSetelahDiskon()`. |
+| Inheritance and polymorphism | `Makanan` and `Minuman` extend `Produk`; `Main` displays a `Produk[]` menu in one loop. |
+| Discount | `Makanan` receives a 10% discount only when `harga > 15000`; `Minuman` has no discount. |
+| Parallel lists | `Transaksi` stores `ArrayList<Produk>` and `ArrayList<Integer>` together for ordered products and quantities. |
+| Custom exceptions | `KantinException`, `StokTidakCukupException`, `ProdukTidakDitemukanException`, and unchecked `DataTidakValidException`. |
+| Exception handling | `Main` demonstrates specific catch, multi-catch, catch through the parent class, and `finally`. |
 
-## Features
-
-The program shows three drinks, validates menu and quantity input, allows several items to be added to one order, supports an optional topping for coffee, calculates a total, and exports the final receipt to `pesanan.txt`.
-
-The implementation is deliberately scoped to the course material. `Minuman` is an abstract class; `Kopi`, `Teh`, and `Matcha` extend it; and `Kopi` implements `Toppingable`. The console flow uses `HashMap` for menu lookup, `ArrayList` for the active order, `try`/`catch`-style validation, and `FileWriter` for receipt persistence.
-
-## Project structure
+## Class structure
 
 ```text
 src/
-├── Main.java          # Console flow, validation, order export
-├── Minuman.java       # Abstract base class
-├── Kopi.java          # Inheritance + Toppingable implementation
-├── Teh.java           # Drink subtype
-├── Matcha.java        # Drink subtype
-├── Toppingable.java   # Topping interface
-└── ItemPesanan.java   # Order-line model
+├── Diskonable.java
+├── Produk.java                       # abstract
+├── Makanan.java                      # extends Produk, implements Diskonable
+├── Minuman.java                      # extends Produk
+├── KantinException.java              # checked base exception
+├── StokTidakCukupException.java      # checked
+├── ProdukTidakDitemukanException.java# checked
+├── DataTidakValidException.java      # unchecked
+├── Transaksi.java                    # parallel ArrayList order model
+└── Main.java                         # normal and error scenarios
 ```
+
+All classes are intentionally in the **default package**, matching the BlueJ project convention specified in the lab.
 
 ## Run locally
 
-Use any JDK that supports standard Java compilation. From the repository root, run:
+Compile and run from the repository root with a standard JDK:
 
 ```bash
 javac -d out src/*.java
 java -cp out Main
 ```
 
-After an order is completed, the receipt is written to `pesanan.txt` in the repository root. The file is intentionally ignored by Git because it is generated at runtime.
+The program prints a polymorphic menu, a receipt for **Budi Santoso**, and readable messages for insufficient stock, product-not-found, multi-catch, parent-class catch, and invalid data scenarios.
 
-## Scope and provenance
+## Scope note
 
-The original Java source file was no longer available when this repository was published. The current source is a clean, runnable reconstruction based on the supplied PBO practical brief: abstract `Minuman`, `Toppingable`, drink subclasses, `ArrayList`, `HashMap`, input validation, exception handling, and file I/O. It is therefore presented as a course-aligned implementation rather than a claim that this is the exact original submission.
-
-This is a focused academic console project, not a production ordering platform.
+The original source file was unavailable. This repository is a clean reconstruction based directly on the supplied Week 14 lab brief, so it is presented as a course-aligned implementation rather than the exact historical submission.

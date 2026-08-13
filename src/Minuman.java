@@ -1,32 +1,25 @@
 /**
- * Base abstraction for a drink sold by the campus cafeteria.
+ * Beverage product without a discount contract.
  */
-public abstract class Minuman {
-    private final int id;
-    private final String nama;
-    private final int harga;
+public class Minuman extends Produk {
+    private int ukuranMl;
 
-    protected Minuman(int id, String nama, int harga) {
-        this.id = id;
-        this.nama = nama;
-        this.harga = harga;
+    public Minuman(String nama, double harga, int stok, int ukuranMl) {
+        super(nama, harga, stok);
+        if (ukuranMl <= 0) {
+            throw new DataTidakValidException("Ukuran minuman harus lebih dari nol.");
+        }
+        this.ukuranMl = ukuranMl;
     }
 
-    public int getId() {
-        return id;
+    @Override
+    public String getKategori() {
+        return "Minuman";
     }
 
-    public String getNama() {
-        return nama;
-    }
-
-    public int getHarga() {
-        return harga;
-    }
-
-    public abstract String getRasa();
-
-    public String tampilkanInfo() {
-        return String.format("%d. %s — Rp%,d (%s)", id, nama, harga, getRasa());
+    @Override
+    public void tampilkanInfo() {
+        super.tampilkanInfo();
+        System.out.println("Ukuran   : " + ukuranMl + " mL");
     }
 }
