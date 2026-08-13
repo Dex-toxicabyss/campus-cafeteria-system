@@ -1,48 +1,58 @@
 # Campus Cafeteria System — Lab OOP Week 14
 
-This repository contains a runnable Java console implementation of the **Campus Cafeteria Management System** from the Week 14 guided Object-Oriented Programming lab. The implementation follows the supplied lab structure: products with stock, food discount rules, a transaction using parallel `ArrayList`s, and a checked/unchecked custom-exception hierarchy.
+> A runnable Java console implementation of the guided Week 14 **Campus Cafeteria Management System** lab. The source is intentionally kept in the **default package** to remain compatible with the BlueJ workflow specified by the lab.
 
-## Lab requirements implemented
+This project demonstrates how core object-oriented design, collection handling, and exception control work together in a small transactional domain. A cashier can assemble a customer order from food and beverage products, calculate the correct discount and total, reduce available stock, and receive clear feedback when an order is invalid.
 
-| Requirement | Implementation |
+## Highlights
+
+| Area | What the implementation demonstrates |
 | --- | --- |
-| Abstract class | `Produk` holds protected `nama`, `harga`, and `stok`; it declares abstract `getKategori()`. |
-| Interface | `Diskonable` provides `hitungDiskon()` and `getHargaSetelahDiskon()`. |
-| Inheritance and polymorphism | `Makanan` and `Minuman` extend `Produk`; `Main` displays a `Produk[]` menu in one loop. |
-| Discount | `Makanan` receives a 10% discount only when `harga > 15000`; `Minuman` has no discount. |
-| Parallel lists | `Transaksi` stores `ArrayList<Produk>` and `ArrayList<Integer>` together for ordered products and quantities. |
-| Custom exceptions | `KantinException`, `StokTidakCukupException`, `ProdukTidakDitemukanException`, and unchecked `DataTidakValidException`. |
-| Exception handling | `Main` demonstrates specific catch, multi-catch, catch through the parent class, and `finally`. |
+| Object model | Abstract `Produk` base class with specialised `Makanan` and `Minuman` subclasses. |
+| Polymorphism | A `Produk[]` menu is rendered through one loop while each subtype displays its own information. |
+| Discount rule | `Makanan` implements `Diskonable`: a 10% discount applies only when the unit price is greater than Rp15.000. |
+| Transaction state | `Transaksi` keeps `ArrayList<Produk>` and `ArrayList<Integer>` aligned as parallel lists. |
+| Error handling | Checked business exceptions for stock/product lookup; unchecked validation errors for bad source data. |
+| Demonstration | `Main` covers a successful order, insufficient stock, failed lookup, multi-catch, parent-class catch, and `finally`. |
 
 ## Class structure
 
 ```text
 src/
-├── Diskonable.java
-├── Produk.java                       # abstract
-├── Makanan.java                      # extends Produk, implements Diskonable
-├── Minuman.java                      # extends Produk
-├── KantinException.java              # checked base exception
-├── StokTidakCukupException.java      # checked
-├── ProdukTidakDitemukanException.java# checked
-├── DataTidakValidException.java      # unchecked
-├── Transaksi.java                    # parallel ArrayList order model
-└── Main.java                         # normal and error scenarios
+├── Diskonable.java                    # interface: discount contract
+├── Produk.java                        # abstract product blueprint
+├── Makanan.java                       # extends Produk, implements Diskonable
+├── Minuman.java                       # extends Produk
+├── KantinException.java               # checked business-error base class
+├── StokTidakCukupException.java       # checked: unavailable stock
+├── ProdukTidakDitemukanException.java # checked: product is absent from a transaction
+├── DataTidakValidException.java       # unchecked: invalid object data
+├── Transaksi.java                     # customer order using parallel ArrayLists
+└── Main.java                          # complete lab scenario
 ```
 
-All classes are intentionally in the **default package**, matching the BlueJ project convention specified in the lab.
+The diagram and method-level relationships are documented in [Class Diagram](docs/CLASS_DIAGRAM.md). A direct mapping between the lab requirements and implementation is available in [Requirement Traceability](docs/REQUIREMENT_TRACEABILITY.md).
 
 ## Run locally
 
-Compile and run from the repository root with a standard JDK:
+The project is tested with **JDK 21** and uses no external library. From the repository root:
 
 ```bash
 javac -d out src/*.java
 java -cp out Main
 ```
 
-The program prints a polymorphic menu, a receipt for **Budi Santoso**, and readable messages for insufficient stock, product-not-found, multi-catch, parent-class catch, and invalid data scenarios.
+The expected successful transaction is for **Budi Santoso**: two `Ayam Goreng Crispy` (discounted) and one `Es Teh Manis`, with a total of **Rp 37.400**. The program then proceeds through the required failure scenarios without letting an exception escape from `main`.
+
+## Documentation
+
+| Document | Purpose |
+| --- | --- |
+| [Class Diagram](docs/CLASS_DIAGRAM.md) | Visual class, inheritance, interface, and exception hierarchy reference. |
+| [BlueJ Guide](docs/BLUEJ_GUIDE.md) | Steps to open, compile, and inspect the project in BlueJ. |
+| [Requirement Traceability](docs/REQUIREMENT_TRACEABILITY.md) | Evidence that every Week 14 requirement has a corresponding implementation point. |
+| [Testing Notes](docs/TESTING.md) | Reproducible compile/run command and expected test scenarios. |
 
 ## Scope note
 
-The original source file was unavailable. This repository is a clean reconstruction based directly on the supplied Week 14 lab brief, so it is presented as a course-aligned implementation rather than the exact historical submission.
+The original source file was unavailable. This repository is a clean, course-aligned reconstruction based directly on the supplied Week 14 brief, not a claim that it is the exact historical submission. It is intentionally a focused academic console project rather than a production ordering platform.
