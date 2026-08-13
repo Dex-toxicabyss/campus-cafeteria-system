@@ -1,6 +1,6 @@
 # Campus Cafeteria System
 
-A Java console project developed for an Object-Oriented Programming course. The project uses a campus cafeteria scenario to practice modeling menu items, order handling, and clean object-oriented behavior.
+Campus Cafeteria System is a runnable Java console application developed from the supplied Object-Oriented Programming course brief. It models a small beverage-ordering flow in a campus cafeteria.
 
 ## Snapshot
 
@@ -9,26 +9,41 @@ A Java console project developed for an Object-Oriented Programming course. The 
 | Project type | Academic PBO project |
 | Language | Java |
 | Interface | Console application |
-| Focus | Abstraction, interfaces, inheritance, collections, file I/O |
-| Status | Documentation-first repository |
+| Main concepts | Abstraction, interfaces, inheritance, polymorphism, collections, exception handling, file I/O |
+| Status | Runnable source included |
 
-## What the project demonstrates
+## Features
 
-The project models beverage-related objects through an abstract `Minuman` class and a `Toppingable` interface. The course implementation applies encapsulation, inheritance, polymorphism, `ArrayList`, `HashMap`, input validation, exception handling, and file I/O in a small cafeteria domain.
+The program shows three drinks, validates menu and quantity input, allows several items to be added to one order, supports an optional topping for coffee, calculates a total, and exports the final receipt to `pesanan.txt`.
 
-## Concepts practiced
+The implementation is deliberately scoped to the course material. `Minuman` is an abstract class; `Kopi`, `Teh`, and `Matcha` extend it; and `Kopi` implements `Toppingable`. The console flow uses `HashMap` for menu lookup, `ArrayList` for the active order, `try`/`catch`-style validation, and `FileWriter` for receipt persistence.
 
-- Abstract classes and interface contracts
-- Encapsulation with private fields and accessors
-- Inheritance and polymorphic behavior
-- `ArrayList` and `HashMap` for menu or order data
-- Exception handling and validated console input
-- File I/O for order persistence
+## Project structure
 
-## Code availability
+```text
+src/
+├── Main.java          # Console flow, validation, order export
+├── Minuman.java       # Abstract base class
+├── Kopi.java          # Inheritance + Toppingable implementation
+├── Teh.java           # Drink subtype
+├── Matcha.java        # Drink subtype
+├── Toppingable.java   # Topping interface
+└── ItemPesanan.java   # Order-line model
+```
 
-This public repository currently documents the academic project. The original Java source files are not included in this first publication, so no JDK version or compile command is claimed. When the source is added, this README will be updated with the exact project structure and copy-paste-ready run instructions.
+## Run locally
 
-## Scope note
+Use any JDK that supports standard Java compilation. From the repository root, run:
 
-This is a focused academic console project, not a production ordering platform. It is published to show the PBO concepts practiced and the project context clearly.
+```bash
+javac -d out src/*.java
+java -cp out Main
+```
+
+After an order is completed, the receipt is written to `pesanan.txt` in the repository root. The file is intentionally ignored by Git because it is generated at runtime.
+
+## Scope and provenance
+
+The original Java source file was no longer available when this repository was published. The current source is a clean, runnable reconstruction based on the supplied PBO practical brief: abstract `Minuman`, `Toppingable`, drink subclasses, `ArrayList`, `HashMap`, input validation, exception handling, and file I/O. It is therefore presented as a course-aligned implementation rather than a claim that this is the exact original submission.
+
+This is a focused academic console project, not a production ordering platform.
