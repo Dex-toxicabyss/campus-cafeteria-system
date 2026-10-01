@@ -1,58 +1,71 @@
-# Campus Cafeteria System — Lab OOP Week 14
+# Campus Cafeteria System — OOP Week 14
 
-> A runnable Java console implementation of the guided Week 14 **Campus Cafeteria Management System** lab. The source is intentionally kept in the **default package** to remain compatible with the BlueJ workflow specified by the lab.
+A runnable Java console implementation of a guided Week 14 Object-Oriented Programming lab. The project models a cafeteria transaction using abstraction, inheritance, polymorphism, an interface, collections, and exception handling.
 
-This project demonstrates how core object-oriented design, collection handling, and exception control work together in a small transactional domain. A cashier can assemble a customer order from food and beverage products, calculate the correct discount and total, reduce available stock, and receive clear feedback when an order is invalid.
+## What it demonstrates
+
+- Abstract `Produk` as the base product type
+- `Makanan` and `Minuman` specializations
+- `Diskonable` as a discount contract
+- Polymorphic rendering through a `Produk[]` menu
+- `ArrayList`-based transaction items and quantities
+- Checked business exceptions for stock and lookup failures
+- Unchecked validation errors for invalid source data
+- `try/catch`, multi-catch, parent-class catch, and `finally`
 
 ## Highlights
 
-| Area | What the implementation demonstrates |
+| Area | Implementation |
 | --- | --- |
-| Object model | Abstract `Produk` base class with specialised `Makanan` and `Minuman` subclasses. |
-| Polymorphism | A `Produk[]` menu is rendered through one loop while each subtype displays its own information. |
-| Discount rule | `Makanan` implements `Diskonable`: a 10% discount applies only when the unit price is greater than Rp15.000. |
-| Transaction state | `Transaksi` keeps `ArrayList<Produk>` and `ArrayList<Integer>` aligned as parallel lists. |
-| Error handling | Checked business exceptions for stock/product lookup; unchecked validation errors for bad source data. |
-| Demonstration | `Main` covers a successful order, insufficient stock, failed lookup, multi-catch, parent-class catch, and `finally`. |
+| Product model | Abstract `Produk` with `Makanan` and `Minuman` subclasses |
+| Discount | 10% food discount when the unit price is above Rp15.000 |
+| Transaction | Product quantities, totals, and receipt output |
+| Error handling | Stock, lookup, business, and validation exceptions |
+| Demo | Successful transaction plus required failure scenarios |
 
-## Class structure
+## Repository structure
 
 ```text
 src/
-├── Diskonable.java                    # interface: discount contract
-├── Produk.java                        # abstract product blueprint
-├── Makanan.java                       # extends Produk, implements Diskonable
-├── Minuman.java                       # extends Produk
-├── KantinException.java               # checked business-error base class
-├── StokTidakCukupException.java       # checked: unavailable stock
-├── ProdukTidakDitemukanException.java # checked: product is absent from a transaction
-├── DataTidakValidException.java       # unchecked: invalid object data
-├── Transaksi.java                     # customer order using parallel ArrayLists
-└── Main.java                          # complete lab scenario
-```
+├── Produk.java
+├── Makanan.java
+├── Minuman.java
+├── Diskonable.java
+├── Transaksi.java
+├── KantinException.java
+├── StokTidakCukupException.java
+├── ProdukTidakDitemukanException.java
+├── DataTidakValidException.java
+└── Main.java
 
-The diagram and method-level relationships are documented in [Class Diagram](docs/CLASS_DIAGRAM.md). A direct mapping between the lab requirements and implementation is available in [Requirement Traceability](docs/REQUIREMENT_TRACEABILITY.md).
+docs/
+├── BLUEJ_GUIDE.md
+├── CLASS_DIAGRAM.md
+├── REQUIREMENT_TRACEABILITY.md
+└── TESTING.md
+```
 
 ## Run locally
 
-The project is tested with **JDK 21** and uses no external library. From the repository root:
+The project uses the Java standard library and was tested with JDK 21:
 
 ```bash
+rm -rf out
 javac -d out src/*.java
 java -cp out Main
 ```
 
-The expected successful transaction is for **Budi Santoso**: two `Ayam Goreng Crispy` (discounted) and one `Es Teh Manis`, with a total of **Rp 37.400**. The program then proceeds through the required failure scenarios without letting an exception escape from `main`.
+## Expected demonstration
+
+The first transaction combines two `Ayam Goreng Crispy` items and one `Es Teh Manis`, applying the food discount and producing a total of **Rp 37.400**. The program then demonstrates insufficient stock, missing-product lookup, multi-catch, parent exception handling, and invalid data validation.
 
 ## Documentation
 
-| Document | Purpose |
-| --- | --- |
-| [Class Diagram](docs/CLASS_DIAGRAM.md) | Visual class, inheritance, interface, and exception hierarchy reference. |
-| [BlueJ Guide](docs/BLUEJ_GUIDE.md) | Steps to open, compile, and inspect the project in BlueJ. |
-| [Requirement Traceability](docs/REQUIREMENT_TRACEABILITY.md) | Evidence that every Week 14 requirement has a corresponding implementation point. |
-| [Testing Notes](docs/TESTING.md) | Reproducible compile/run command and expected test scenarios. |
+- [Class Diagram](docs/CLASS_DIAGRAM.md)
+- [BlueJ Guide](docs/BLUEJ_GUIDE.md)
+- [Requirement Traceability](docs/REQUIREMENT_TRACEABILITY.md)
+- [Testing Notes](docs/TESTING.md)
 
 ## Scope note
 
-The original source file was unavailable. This repository is a clean, course-aligned reconstruction based directly on the supplied Week 14 brief, not a claim that it is the exact historical submission. It is intentionally a focused academic console project rather than a production ordering platform.
+This is a focused academic console project, not a production ordering platform. The source is documented as a course-aligned implementation for learning and assessment review.
