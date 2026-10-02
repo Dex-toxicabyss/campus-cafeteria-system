@@ -69,3 +69,49 @@ The first transaction combines two `Ayam Goreng Crispy` items and one `Es Teh Ma
 ## Scope note
 
 This is a focused academic console project, not a production ordering platform. The source is documented as a course-aligned implementation for learning and assessment review.
+## OOP relationship
+
+```mermaid
+classDiagram
+    class Produk
+    class Makanan
+    class Minuman
+    class Diskonable
+    class Transaksi
+    class KantinException
+    class StokTidakCukupException
+    class ProdukTidakDitemukanException
+    class DataTidakValidException
+    Produk <|-- Makanan
+    Produk <|-- Minuman
+    Diskonable <|.. Makanan
+    Transaksi ..> Produk
+    KantinException <|-- StokTidakCukupException
+    KantinException <|-- ProdukTidakDitemukanException
+    DataTidakValidException ..> Produk
+```
+
+## Portfolio evidence
+
+The implementation demonstrates abstraction, inheritance, polymorphism, interface-based discount behavior, collections, and multiple exception-handling patterns in one small domain.
+
+### Validation command
+
+```bash
+rm -rf out
+javac -d out src/*.java
+java -cp out Main
+```
+
+Expected scenarios are documented in [`docs/TESTING.md`](docs/TESTING.md).
+
+## Limitations
+
+- Console-only interface
+- No persistence or authentication
+- No external dependencies
+- Designed for the Week 14 academic lab rather than production deployment
+
+## Usage policy
+
+No open-source license is included. This repository is published for portfolio and academic reference; reuse should be requested from the author.
